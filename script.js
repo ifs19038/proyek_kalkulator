@@ -34,10 +34,17 @@ operators.forEach((operator) => {
 })
 
 const inputOperator = (operator) => {
-    pervNumber = currentNumber
+    if(calculationOperator === ''){
+        prevNumber = currentNumber
+    }
     calculationOperator = operator
-    currentNumber = ''
+    currentNumber ='0'
 }
+// const inputOperator = (operator) => {
+//     prevNumber = currentNumber
+//     calculationOperator = operator
+//     currentNumber = ''
+// }
 
 const equalSign = document.querySelector('.equal-sign')
 
@@ -46,11 +53,13 @@ equalSign.addEventListener('click', () =>{
     updateScreen(currentNumber)
 })
 
+
+
 const calculate = () => {
     let result = ''
     switch(calculationOperator){
         case '+':
-            result = parseInt(prevNumber) + parseInt(currentNumber)
+            result = parseFloat(prevNumber) + parseFloat(currentNumber)
             break
         case '-':
             result = prevNumber - currentNumber
@@ -61,9 +70,51 @@ const calculate = () => {
         case '/':
             result = prevNumber / currentNumber
             break
+        case '/':
+            result = prevNumber / currentNumber
+            break
         default:
             break
     }
     currentNumber = result
     calculationOperator = ''
 }
+
+const clearBtn = document.querySelector('.all-clear')
+
+clearBtn.addEventListener('click', (event) => {
+    clearAll()
+    inputNumber(event.target.value)
+    updateScreen(currentNumber)
+})
+
+const clearAll = () => {
+    prevNumber = ''
+    calculationOperator = ''
+    currentNumber = 0
+    
+}
+
+const decimal = document.querySelector('.decimal')
+
+decimal.addEventListener('click', (event) => {
+    inputDecimal(event.target.value)
+    updateScreen(currentNumber)
+})
+
+inputDecimal = (dot) => {
+    if(currentNumber.includes('.')){
+        return
+    }
+    currentNumber += dot
+}
+
+const percentage = document.querySelector('.percentage');
+
+percentage.addEventListener('click', () => {
+  calculatePercentage();
+});
+const calculatePercentage = () => {
+    let result = parseFloat(currentNumber) / 100;
+    updateScreen(result);
+  }
